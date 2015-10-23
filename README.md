@@ -17,4 +17,4 @@ new SeeDownloadImg('[data-lz-src]', {
 </script>
 
 img标签例子：
- <img data-lz-src="真实的图片地址" src="默认图片地址">
+ &lt;img data-lz-src="真实的图片地址" src="默认图片地址"&gt;
