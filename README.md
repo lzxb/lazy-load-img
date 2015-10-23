@@ -5,7 +5,7 @@
 
 
 例子：
-<script type="text/javascript">
+&lt;script type="text/javascript"&gt;
 new SeeDownloadImg('[data-lz-src]', {
 	top: 10, //元素在顶部伸出的高度
 	bottom: 10, //元素在底部伸出的高度
@@ -14,7 +14,7 @@ new SeeDownloadImg('[data-lz-src]', {
 		obj.style.cssText = '-webkit-animation: fadeIn 0.5s ease 0.2s 1 both;animation: fadeIn 0.8s ease 0.2s 1 both;';
 	}
 });
-</script>
+&lt;/script&gt;
 
 img标签例子：
  &lt;img data-lz-src="真实的图片地址" src="默认图片地址"&gt;
