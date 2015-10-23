@@ -83,7 +83,7 @@
 
 			oImgObj.addEventListener('load', function () {
 				oImg.src = oImgObj.src;
-				_this.config.fnLoadImg(this);
+				_this.config.fnLoadImg(oImg);
 			},false);
 			
 		}
