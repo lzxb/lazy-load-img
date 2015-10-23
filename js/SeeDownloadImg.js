@@ -15,7 +15,6 @@
 		this.config = {
 			top: 10, //元素在顶部伸出的高度
 			bottom: 10, //元素在底部伸出的高度
-			query: '[data-lz-src]', //获取图片元素
 			updateTag: false, //循环结束后，是否自动更新标签，true为更新，false不更新
 			fnLoadImg: function () {} //真实图片加载成功后执行
 		};
