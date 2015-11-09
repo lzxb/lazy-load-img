@@ -18,7 +18,9 @@
 			updateTag: false, //循环结束后，是否自动更新标签，true为更新，false不更新
 			fnLoadImg: function () {} //真实图片加载成功后执行
 		};
+		console.log(query);
 		this.query = query? query : '[data-lz-src]'; //选择器
+		console.log(this.query);
 		this.tag = null; //存储标签
 		
 		for (attr in config) { //更新配置
@@ -46,7 +48,7 @@
 			}, false);
 		},
 		getTag: function () { //更新标签
-			this.tag = document.querySelectorAll(this.config.query);
+			this.tag = document.querySelectorAll(this.query);
 			this.tag = Array.prototype.slice.call(this.tag);
 		},
 		each: function () { //循环标签
