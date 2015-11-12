@@ -13,8 +13,8 @@
 	function SeeDownloadImg (setting){
 		
 		this.selector = '[data-lz-src]'; //选择器
-		this.iTop = setting.iTop || 0;         //元素在顶部伸出的距离
-		this.iBottom = setting.iBottom || 0;      //元素在底部伸出的距离
+		this.iTop = setting.iTop || 0;         //元素在顶部伸出的距离才加载
+		this.iBottom = setting.iBottom || 0;      //元素在底部伸出的距离才加载
 		this.fLoadImg = setting.fLoadImg || function (oImg){}; //图片加载完成后执行方法
 		this.aElements = [];   //存储元素
 		this.status = true;    //检测状态值
