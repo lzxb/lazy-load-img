@@ -17,8 +17,9 @@
 		this.iBottom = setting.iBottom || 0;      //元素在底部伸出的距离才加载
 		this.fLoadImg = setting.fLoadImg || function (oImg){}; //图片加载完成后执行方法
 		this.aElements = [];   //存储元素
-		this.status = true;    //检测状态值
-		
+		this.bStatus = true;    //检测状态值
+		this.bSquare = setting.bSquare ||false;   //是否将图片剪切成正方形
+
 		this.init();
 	}
 	SeeDownloadImg.prototype.init = function () {
@@ -31,7 +32,7 @@
 		
 		window.addEventListener('scroll', function () {
 			
-			if (_this.status) {
+			if (_this.bStatus) {
 				_this.each();
 			} else {
 				_this.getElements();
@@ -52,7 +53,7 @@
 		}
 	}
     SeeDownloadImg.prototype.each = function () {
-        this.status = false;
+        this.bStatus = false;
         var aElements = this.aElements;
 
         for (var i=0;i<aElements.length;i++) {
@@ -64,7 +65,7 @@
             } 
             
         }
-		this.status = true; //做缓处理，避免因为用户滑动过快导致的内存上涨
+		this.bStatus = true; //避免本次循环没结束，又开启新的循环
     }
     SeeDownloadImg.prototype.testMeet = function (obj) {
 
@@ -85,8 +86,35 @@
 			oImgObj.src = url;
 
 			oImgObj.addEventListener('load', function () {
-				oImg.src = oImgObj.src;
+				
+				if (_this.bSquare) {
+
+					var iWidth = oImg.width; //取得原来图片的宽度
+
+					if (oImgObj.width > oImgObj.height) { //长方形
+						oImg.style.height = iWidth + 'px';
+						oImg.style.width = 'auto';
+					} else if (oImgObj.height > oImgObj.width) { //高方形
+						oImg.style.width = iWidth + 'px';
+						oImg.style.marginTop = 'px';
+						oImg.style.height = 'auto';
+					}
+					oImg.parentNode.style.height = iWidth + 'px'; //设置父元素的高度
+					oImg.parentNode.style.overflow = 'hidden';
+					oImg.src = oImgObj.src;
+					
+					//console.log(oImg);
+					if (oImg.width > oImg.height) { //长方形
+						oImg.style.marginLeft = '-' + ((oImg.width - oImg.height)/2) + 'px';
+					} else if (oImg.height > oImg.width) { //高方形
+						oImg.style.marginTop = '-' + ((oImg.height - oImg.width)/2) + 'px';
+					}
+				
+				} else {
+					oImg.src = oImgObj.src;
+				}
 				_this.fLoadImg(oImg);
+				
 			},false);
 	}
 	
