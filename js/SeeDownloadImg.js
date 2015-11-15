@@ -9,49 +9,50 @@
 	};
 */
 (function () {
-	
-	function SeeDownloadImg (setting){
-		
-		this.selector = '[data-lz-src]'; //选择器
-		this.iTop = setting.iTop || 0;         //元素在顶部伸出的距离才加载
-		this.iBottom = setting.iBottom || 0;      //元素在底部伸出的距离才加载
-		this.fLoadImg = setting.fLoadImg || function (oImg){}; //图片加载完成后执行方法
-		this.aElements = [];   //存储元素
-		this.bStatus = true;    //检测状态值
-		this.bSquare = setting.bSquare ||false;   //是否将图片剪切成正方形
+    
+    function SeeDownloadImg (setting){
 
-		this.init();
-	}
-	SeeDownloadImg.prototype.init = function () {
-		var _this = this;
-		if (!this.initStatus) window.addEventListener('load',function () {
-			
-			_this.getElements(); //获取元素
-			_this.each();
-		}, false);
-		
-		window.addEventListener('scroll', function () {
-			
-			if (_this.bStatus) {
-				_this.each();
-			} else {
-				_this.getElements();
-			}
-		}, false);
-	}
-	SeeDownloadImg.prototype.getElements = function () {
-		
-		var aTag = document.querySelectorAll(this.selector);
-		
-		for (var i=0;i<aTag.length;i++) {
+        this.selector = '[data-lz-src]'; //选择器
+        this.iTop = setting.iTop || 0;         //元素在顶部伸出的距离才加载
+        this.iBottom = setting.iBottom || 0;      //元素在底部伸出的距离才加载
+        this.fLoadImg = setting.fLoadImg || function (oImg){}; //图片加载完成后执行方法
+        this.aElements = [];   //存储元素
+        this.bStatus = true;    //检测状态值
+        this.bSquare = setting.bSquare ||false;   //是否将图片剪切成正方形
+
+        this.init();
+    }
+    SeeDownloadImg.prototype.init = function () {
+        var _this = this;
+        if (!this.initStatus) window.addEventListener('load',function () {
+            _this.getElements(); //获取元素
+            _this.each();
+        }, false);
+
+        window.addEventListener('scroll', function () {
+
+            if (_this.bStatus) {
+                _this.each();
+            } else {
+                _this.getElements();
+            }
+        }, false);
+        
+    };
+    SeeDownloadImg.prototype.getElements = function () {
+
+        var aTag = document.querySelectorAll(this.selector);
+
+        for (var i=0;i<aTag.length;i++) {
             var json ={};
             json.tag = aTag[i];
             json.src = aTag[i].dataset.lzSrc;
-            delete aTag[i].dataset.lzSrc;
-            
+            delete aTag[i].dataset.lzSrc;                                          
+
             this.aElements.push(json);
-		}
-	}
+        }
+        
+    };
     SeeDownloadImg.prototype.each = function () {
         this.bStatus = false;
         var aElements = this.aElements;
@@ -59,65 +60,48 @@
         for (var i=0;i<aElements.length;i++) {
 
             if (this.testMeet(aElements[i].tag)) {
-				this.loadImg(aElements[i].tag, aElements[i].src);
-				aElements.splice(i,1);
-				i--;
+                this.loadImg(aElements[i].tag, aElements[i].src);
+                aElements.splice(i,1);
+                i--;
             } 
             
         }
-		this.bStatus = true; //避免本次循环没结束，又开启新的循环
-    }
+	this.bStatus = true; //避免本次循环没结束，又开启新的循环
+    };
     SeeDownloadImg.prototype.testMeet = function (obj) {
 
-			var iObjHeight = obj.offsetHeight; //元素的高度
-			var iWinHeight = document.documentElement.clientHeight; //可视区的高度
-			
-			var iDistanceTop = (obj.getBoundingClientRect().top + iObjHeight); //元素在顶部伸出的高度
-			var iDistanceBottom = ((iWinHeight + iObjHeight) - obj.getBoundingClientRect().bottom); //元素在底部伸出的高度
+        var iObjHeight = obj.offsetHeight; //元素的高度
+        var iWinHeight = document.documentElement.clientHeight; //可视区的高度
 
-			var bool = iDistanceTop >= this.iTop && iDistanceBottom >= this.iBottom;
+        var iDistanceTop = (obj.getBoundingClientRect().top + iObjHeight); //元素在顶部伸出的高度
+        var iDistanceBottom = ((iWinHeight + iObjHeight) - obj.getBoundingClientRect().bottom); //元素在底部伸出的高度
 
-			return bool;
-    }
-	SeeDownloadImg.prototype.loadImg = function (oImg, url) {
-		
-			var _this = this;
-			var oImgObj = new Image();
-			oImgObj.src = url;
+        var bool = iDistanceTop >= this.iTop && iDistanceBottom >= this.iBottom;
 
-			oImgObj.addEventListener('load', function () {
-				
-				if (_this.bSquare) {
+        return bool;
+    };
+    SeeDownloadImg.prototype.loadImg = function (oImg, url) {
 
-					var iWidth = oImg.width; //取得原来图片的宽度
+        var _this = this;
+        var iWidth = oImg.width; //原来默认图片的宽度
+        var iHeight = oImg.height; //原来默认图片的高度
+        var oImgObj = new Image();
+        oImgObj.src = url;
 
-					if (oImgObj.width > oImgObj.height) { //长方形
-						oImg.style.height = iWidth + 'px';
-						oImg.style.width = 'auto';
-					} else if (oImgObj.height > oImgObj.width) { //高方形
-						oImg.style.width = iWidth + 'px';
-						oImg.style.marginTop = 'px';
-						oImg.style.height = 'auto';
-					}
-					oImg.parentNode.style.height = iWidth + 'px'; //设置父元素的高度
-					oImg.parentNode.style.overflow = 'hidden';
-					oImg.src = oImgObj.src;
-					
-					//console.log(oImg);
-					if (oImg.width > oImg.height) { //长方形
-						oImg.style.marginLeft = '-' + ((oImg.width - oImg.height)/2) + 'px';
-					} else if (oImg.height > oImg.width) { //高方形
-						oImg.style.marginTop = '-' + ((oImg.height - oImg.width)/2) + 'px';
-					}
-				
-				} else {
-					oImg.src = oImgObj.src;
-				}
-				_this.fLoadImg(oImg);
-				
-			},false);
-	}
+        oImg.parentNode.style.overflow = 'hidden';
+        oImg.parentNode.style.position = 'relative';
+        oImg.parentNode.style.width = iWidth + 'px';
+        oImg.parentNode.style.height = iHeight + 'px';
+        
+        oImgObj.addEventListener('load', function () {
+            console.log(oImgObj);
+            console.log(oImgObj.width + '*' + oImgObj.height);
+            oImg.src = oImgObj.src;
+
+            _this.fLoadImg(oImg);
+
+        },false);
+    };
 	
-	window.SeeDownloadImg = SeeDownloadImg;
+    window.SeeDownloadImg = SeeDownloadImg;
 })();
-

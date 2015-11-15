@@ -26,47 +26,47 @@ img{ display:block; width:100%; margin-bottom:10px;}
 }
 </style>
 <script type="text/javascript" src="js/SeeDownloadImg.js"></script>
-
 </head>
 
 <body>
-	<ul id="ul">
-		<img data-lz-src="images/pic-1.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-2.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-3.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-4.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-5.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-6.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-7.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-8.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-9.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-10.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-11.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-12.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-13.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-14.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-15.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-16.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-17.jpg" src="images/default.jpg" alt="默认图片">
-		<img data-lz-src="images/pic-18.jpg" src="images/default.jpg" alt="默认图片">
-	</ul>
+    <div id="ul">
+        <img data-lz-src="images/pic-1.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-2.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-3.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-4.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-5.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-6.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-7.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-8.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-9.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-10.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-11.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-12.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-13.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-14.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-15.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-16.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-17.jpg" src="images/default.jpg" alt="默认图片">
+        <img data-lz-src="images/pic-18.jpg" src="images/default.jpg" alt="默认图片">
+    </div>
 	
 <script>
-	var oSeeDownloadImg = new SeeDownloadImg({
-		iTop: 20, //元素在顶部伸出的距离才加载
-		iBottom: 20, //元素在底部伸出的距离才加载
-		fLoadImg: function (oImg) {
-			oImg.style.cssText += '-webkit-animation: fadeIn 01s ease 0.2s 1 both;animation: fadeIn 1s ease 0.2s 1 both;';
-		}
-	});
-	
-	//oSeeDownloadImg.getElements();
-	//通过此方法，可以将新插入的标签添加到懒加载队列中
-	
-	/*
-		info：此版本，是在老婆的陪伴下完成的，在这里默默留下对你的爱。
-		date：2015-11-12
-	*/
+    var oSeeDownloadImg = new SeeDownloadImg({
+            iTop: 20, //元素在顶部伸出的距离才加载
+            iBottom: 20, //元素在底部伸出的距离才加载
+            fLoadImg: function (oImg) {
+                oImg.style.cssText += '-webkit-animation: fadeIn 01s ease 0.2s 1 both;animation: fadeIn 1s ease 0.2s 1 both;';
+            }
+    });
+
+
+    //oSeeDownloadImg.getElements();
+    //通过此方法，可以将新插入的标签添加到懒加载队列中
+
+    /*
+            info：此版本，是在老婆的陪伴下完成的，在这里默默留下对你的爱。
+            date：2015-11-12
+    */
 	
 </script>
 </body>
