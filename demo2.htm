@@ -7,8 +7,9 @@
         <title>h5原生js图片懒加载插件</title>
         <style type="text/css">
             *{ padding:0; margin:0; list-style:none;}
-            ul{ padding:10px;}
-            ul li{ margin-bottom: 10px; background: red;}
+            html,body{width:100%; height: 100%;}
+            ul{ overflow: hidden; box-sizing: border-box; padding:10px;}
+            ul li{ width:100%; height: 100%; margin-bottom: 10px;}
             img{ display:block; width: 100%; height:100%; margin-bottom:10px;  transition: all 0.5s ease-out 0s; -webkit-transition: all 0.5s ease-out 0s;}
             @-webkit-keyframes fadeIn {
                 0% {
@@ -50,6 +51,16 @@
             <li><img data-lz-src="images/pic-16.jpg" src="images/default.jpg" alt="默认图片"></li>
             <li><img data-lz-src="images/pic-17.jpg" src="images/default.jpg" alt="默认图片"></li>
             <li><img data-lz-src="images/pic-18.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-19.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-20.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-21.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-22.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-23.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-24.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-25.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-26.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-27.jpg" src="images/default.jpg" alt="默认图片"></li>
+            <li><img data-lz-src="images/pic-28.jpg" src="images/default.jpg" alt="默认图片"></li>
         </ul>
 
         <script>
@@ -64,6 +75,7 @@
 
             //oSeeDownloadImg.getElements();
             //通过此方法，可以将新插入的标签添加到懒加载队列中
+            //注：如果UC开启了适应屏幕，将会导致出现img无法占满父级高度的情况
 
             /*
              info：此版本，是在老婆的陪伴下完成的，在这里默默留下对你的爱。
