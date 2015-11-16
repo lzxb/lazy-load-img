@@ -120,11 +120,11 @@
 
         oImgObj.addEventListener('load', function () {
 
-            if (this.bSquare) { //将图片剪切成正方形
+            if (_this.bSquare) { //将图片剪切成正方形
                 var w2 = 0;
                 var h2 = 0;
                 //oImg.dataset.info = oImgObj.width + '*' + oImgObj.height;
-                oImg.src = oImgObj.src;
+
                 if (oImgObj.width > oImgObj.height) { //长方形,高度需设置100%，宽度等比例剪切
                     w2 = (oImgObj.width * (iWidth / oImgObj.height));
                     oImg.style.width = w2 + 'px';
@@ -142,6 +142,7 @@
                     oImg.style.height = '100%';
                 }
             }
+            oImg.src = oImgObj.src;
             _this.fLoadImg(oImg);
         }
         , false);
