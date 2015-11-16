@@ -119,28 +119,29 @@
         oImg.parentNode.style.height = iHeight + 'px';
 
         oImgObj.addEventListener('load', function () {
-            var w2 = 0;
-            var h2 = 0;
-            //oImg.dataset.info = oImgObj.width + '*' + oImgObj.height;
-            oImg.src = oImgObj.src;
-            if (oImgObj.width > oImgObj.height) { //长方形,高度需设置100%，宽度等比例剪切
-                w2 = (oImgObj.width * (iWidth / oImgObj.height));
-                oImg.style.width = w2 + 'px';
-                oImg.style.height = iHeight + 'px';
-                oImg.style.marginLeft = '-' + ((w2 - iWidth) / 2) + 'px';
 
-            } else if (oImgObj.width < oImgObj.height) { //树型 ,宽度需设置100%，高度等比例剪切
-                h2 = (oImgObj.height * (iHeight / oImgObj.width));
-                oImg.style.width = iWidth + 'px';
-                oImg.style.height = h2 + 'px';
-                oImg.style.marginTop = '-' + ((h2 - iWidth) / 2) + 'px';
+            if (this.bSquare) { //将图片剪切成正方形
+                var w2 = 0;
+                var h2 = 0;
+                //oImg.dataset.info = oImgObj.width + '*' + oImgObj.height;
+                oImg.src = oImgObj.src;
+                if (oImgObj.width > oImgObj.height) { //长方形,高度需设置100%，宽度等比例剪切
+                    w2 = (oImgObj.width * (iWidth / oImgObj.height));
+                    oImg.style.width = w2 + 'px';
+                    oImg.style.height = iHeight + 'px';
+                    oImg.style.marginLeft = '-' + ((w2 - iWidth) / 2) + 'px';
 
-            } else { //正方形
-                oImg.style.width = '100%';
-                oImg.style.height = '100%';
+                } else if (oImgObj.width < oImgObj.height) { //树型 ,宽度需设置100%，高度等比例剪切
+                    h2 = (oImgObj.height * (iHeight / oImgObj.width));
+                    oImg.style.width = iWidth + 'px';
+                    oImg.style.height = h2 + 'px';
+                    oImg.style.marginTop = '-' + ((h2 - iWidth) / 2) + 'px';
+
+                } else { //正方形
+                    oImg.style.width = '100%';
+                    oImg.style.height = '100%';
+                }
             }
-
-
             _this.fLoadImg(oImg);
         }
         , false);
