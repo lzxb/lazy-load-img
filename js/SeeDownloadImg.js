@@ -113,7 +113,8 @@
     oImgObj.src = url;
 
     oImg.parentNode.style.overflow = 'hidden'; //设置父级元素溢出隐藏
-
+    oImg.parentNode.style.width = iWidth + 'px';
+    oImg.parentNode.style.height = iHeight + 'px';
     oImgObj.addEventListener('load', function () {
 
       if (_this.bSquare) { //将图片剪切成正方形
