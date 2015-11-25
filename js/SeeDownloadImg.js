@@ -82,23 +82,33 @@
 
   };
 
-  SeeDownloadImg.prototype.testMeet = function (obj) {
+  SeeDownloadImg.prototype.testMeet = function (element) {
 
-    //元素的高度
-    var iObjHeight = obj.offsetHeight;
+    var iTop = this.iTop; //元素在顶部伸出的高度才加载，单位px
+    var iBottom = this.iBottom; //元素在底部伸出的高度才加载，单位px
 
-    //可视区的高度
-    var iWinHeight = document.documentElement.clientHeight;
+    var status = element.getBoundingClientRect(); //取得元素在屏幕的位置信息
+    var iObjHeight = element.offsetHeight; //元素自身的高度
+    var iWinHeight = document.documentElement.clientHeight; //可视区的高度
+    var conut = -1;
 
-    //元素在顶部伸出的高度
-    var iDistanceTop = (obj.getBoundingClientRect().top + iObjHeight);
+    for (attr in status) {
+      conut += status[attr];
+      element.dataset[attr] = status[attr]; //将元素的位置信息设置到自定义属性，方便调试程序
+    }
+    if (!conut) return; //元素未显示到页面，直接false。原因是元素或其父元素display = none;
 
-    //元素在底部伸出的高度
-    var iDistanceBottom = ((iWinHeight + iObjHeight) - obj.getBoundingClientRect().bottom);
+    if ((status.bottom - iTop) <= 0 && ((status.top + iObjHeight) - iTop) <= 0) {
+      element.dataset.status = '元素被隐藏可视区上面';
+      return false;
+    } else if ((status.top + iBottom) >= iWinHeight && (status.bottom + iBottom) >= (iObjHeight + iWinHeight)) {
+      element.dataset.status = '元素被隐藏可视区下面';
+      return false;
+    } else{
+      element.dataset.status = '元素在可视区内';
+      return true;
+    }
 
-    var bool = iDistanceTop >= this.iTop && iDistanceBottom >= this.iBottom;
-
-    return bool;
   };
 
   SeeDownloadImg.prototype.loadImg = function (oImg, url) {
@@ -112,12 +122,12 @@
     var oImgObj = new Image();
     oImgObj.src = url;
 
-    oImg.parentNode.style.overflow = 'hidden'; //设置父级元素溢出隐藏
-    oImg.parentNode.style.width = iWidth + 'px';
-    oImg.parentNode.style.height = iHeight + 'px';
     oImgObj.addEventListener('load', function () {
 
       if (_this.bSquare) { //将图片剪切成正方形
+        oImg.parentNode.style.overflow = 'hidden'; //设置父级元素溢出隐藏
+        oImg.parentNode.style.width = iWidth + 'px';
+        oImg.parentNode.style.height = iHeight + 'px';
         var w2 = 0; //宽度
         var h2 = 0; //高度
 
