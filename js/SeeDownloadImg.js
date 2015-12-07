@@ -89,7 +89,7 @@
 
     var status = element.getBoundingClientRect(); //取得元素在屏幕的位置信息
     var iObjHeight = element.offsetHeight; //元素自身的高度
-    var iWinHeight = document.body.clientHeight; //网页可见区域高
+    var iWinHeight = window.innerHeight; //网页可见区域高
     var conut = -1;
 
     for (attr in status) {
