@@ -1,4 +1,4 @@
-# lazyload
+# LazyloadImg
 
 <h2>轻量级的移动端图片懒加载插件</h2>
 原生js开发，不依赖任何框架或库<br>
@@ -8,7 +8,7 @@
 
 <h3>快速入门</h3>
 <pre>
-     new Lazyload({
+     new LazyloadImg({
         el: '[data-src]', //匹配元素
         top: 50, //元素在顶部伸出长度触发加载机制
         right: 50, //元素在右边伸出长度触发加载机制
