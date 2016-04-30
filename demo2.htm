@@ -2,119 +2,114 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>h5原生js图片懒加载插件</title>
-  <style type="text/css">
-    * {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-    }
-
-    ul {
-      overflow: hidden;
-      box-sizing: border-box;
-      padding: 10px;
-    }
-
-    ul li {
-      width: 100%;
-      height: 100%;
-      margin-bottom: 10px;
-    }
-
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      margin-bottom: 10px;
-      transition: all 0.5s ease-out 0s;
-      -webkit-transition: all 0.5s ease-out 0s;
-    }
-
-    @-webkit-keyframes fadeIn {
-      0% {
-        opacity: 0.5
-      }
-      100% {
-        opacity: 1
-      }
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0.5
-      }
-      100% {
-        opacity: 1
-      }
-    }
-
-  </style>
-  <script type="text/javascript" src="js/SeeDownloadImg.js"></script>
+    <title>h5原生js图片懒加载插件</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        ul {
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        
+        ul li {
+            width: 100%;
+            height: 100%;
+            margin-bottom: 10px;
+        }
+        
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            margin-bottom: 10px;
+            transition: all 0.5s ease-out 0s;
+            -webkit-transition: all 0.5s ease-out 0s;
+        }
+        
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0.5
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0.5
+            }
+            100% {
+                opacity: 1
+            }
+        }
+    </style>
 
 </head>
 
 <body>
-  <ul id="ul">
-    <li><img data-lz-src="images/pic-1.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-2.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-3.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-4.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-5.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-6.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-7.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-8.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-9.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-10.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-11.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-12.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-13.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-14.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-15.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-16.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-17.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-18.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-19.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-20.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-21.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-22.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-23.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-24.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-25.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-26.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-27.jpg" src="images/default.jpg" alt="默认图片"></li>
-    <li><img data-lz-src="images/pic-28.jpg" src="images/default.jpg" alt="默认图片"></li>
-  </ul>
+    <ul id="ul">
+        <li><img data-src="images/pic-1.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-2.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-3.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-4.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-5.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-6.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-7.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-8.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-9.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-10.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-11.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-12.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-13.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-14.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-15.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-16.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-17.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-18.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-19.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-20.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-21.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-22.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-23.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-24.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-25.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-26.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-27.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-28.jpg" src="images/default.png" alt="默认图片"></li>
+        <li><img data-src="images/pic-29.jpg" src="images/default.png" alt="默认图片"></li>
+    </ul>
+    <script src="lazyload.min.js"></script>
+    <script>
+        var lazyload = new Lazyload({
+            el: '#ul [data-src]', //匹配元素
+            top: 50, //元素在顶部伸出长度触发加载机制
+            right: 50, //元素在右边伸出长度触发加载机制
+            bottom: 50, //元素在底部伸出长度触发加载机制
+            left: 50, //元素在左边伸出长度触发加载机制
+            qriginal: true, // true，自动将图片剪切成默认图片的宽高；false显示图片真实宽高
+            load: function (el) { //图片加载成功后执行的回调方法，传入一个参数
+                el.style.cssText += '-webkit-animation: fadeIn 01s ease 0.2s 1 both;animation: fadeIn 1s ease 0.2s 1 both;';
+            },
+            error: function (el) { //图片加载失败后执行的回调方法
 
-  <script>
-    var oSeeDownloadImg = new SeeDownloadImg({
-      iTop: 20, //元素在顶部伸出的距离才加载
-      iBottom: 20, //元素在底部伸出的距离才加载
-      bSquare: true, //是否将图片切成正方形
-      fLoadImg: function(oImg) {
-        oImg.style.cssText += '-webkit-animation: fadeIn 01s ease 0.2s 1 both;animation: fadeIn 1s ease 0.2s 1 both;';
-      }
-    });
-
-    //oSeeDownloadImg.getElements();
-    //通过此方法，可以将新插入的标签添加到懒加载队列中
-    //注：如果UC开启了适应屏幕，将会导致出现img无法占满父级高度的情况
-
-    /*
-     info：此版本，是在老婆的陪伴下完成的，在这里默默留下对你的爱。
-     date：2015-11-12
-     */
-
-  </script>
+            }
+        });
+    </script>
 </body>
 
 </html>
