@@ -34,7 +34,6 @@
         this.load = function (el) {}; //加载成功后回调方法
         this.error = function (el) {}; //加载失败后回调方法
         this.qriginal = false; //是否将图片处理成正方形,true处理成正方形，false不处理
-        this.transparent = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAEklEQVR42mP4//8/AzJmIF0AAHImL9Fd8LZHAAAAAElFTkSuQmCC'; //透明的图片
 
         for (var key in myset) { //覆盖配置
             this[key] = myset[key];
@@ -140,9 +139,7 @@
         img.addEventListener('load', function () {
 
             if (_this.qriginal) {
-                el.style.width = el.width + 'px';
-                el.style.height = el.height + 'px';
-                el.src = _this.transparent;
+                el.src = _this.getTransparent(el.width, el.height);
                 el.className += ' LazyloadImg-qriginal';
                 el.style.backgroundImage = 'url(' + img.src + ')';
             } else {
@@ -157,6 +154,17 @@
         }, false);
     };
 
+    LazyloadImg.prototype.getTransparent = (function () {
+        var canvas = document.createElement('canvas');
+        canvas.getContext('2d').globalAlpha = 0.0;
+        return function (w, h) {
+            canvas.width = Math.round(w * (10 / w));
+            canvas.height = Math.round(h * (10 / h));
+            var data = canvas.toDataURL('image/png');
+            return data;
+        };
+
+    })();
     return new LazyloadImg(myset);
 
 });
