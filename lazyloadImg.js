@@ -1,5 +1,5 @@
 /*!=
-    version: 2.0.1
+    version: 2.0.2
     date: 2016-05-10
     author: 狼族小狈
     github：https://github.com/1340641314/lazyloadImg
@@ -163,8 +163,10 @@
         var canvas = document.createElement('canvas');
         canvas.getContext('2d').globalAlpha = 0.0;
         return function (w, h) {
-            canvas.width = Math.round(w * (10 / w));
-            canvas.height = Math.round(h * (10 / h));
+//            canvas.width = Math.round(w * (10 / w));
+//            canvas.height = Math.round(h * (10 / h));
+            canvas.width = w;
+            canvas.height = h;
             var data = canvas.toDataURL('image/png');
             return data;
         };
