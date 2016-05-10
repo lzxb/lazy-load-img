@@ -40,6 +40,7 @@
                 opacity: 1
             }
         }
+
     </style>
 </head>
 
@@ -77,20 +78,23 @@
     </div>
     <script src="lazyloadImg.min.js"></script>
     <script>
-        new LazyloadImg({
+        var lazyloadImg = new LazyloadImg({
             el: '#ul [data-src]', //匹配元素
             top: 50, //元素在顶部伸出长度触发加载机制
             right: 50, //元素在右边伸出长度触发加载机制
             bottom: 50, //元素在底部伸出长度触发加载机制
             left: 50, //元素在左边伸出长度触发加载机制
             qriginal: false, // true，自动将图片剪切成默认图片的宽高；false显示图片真实宽高
-            load: function (el) { //图片加载成功后执行的回调方法，传入一个参数
+            load: function(el) { //图片加载成功后执行的回调方法，传入一个参数
                 el.style.cssText += '-webkit-animation: fadeIn 01s ease 0.2s 1 both;animation: fadeIn 1s ease 0.2s 1 both;';
             },
-            error: function (el) { //图片加载失败后执行的回调方法
+            error: function(el) { //图片加载失败后执行的回调方法
 
             }
         });
+        //结束图片懒加载事件监听：lazyloadImg.end();
+        //开始图片懒加载事件监听：lazyloadImg.start();
+
     </script>
 </body>
 

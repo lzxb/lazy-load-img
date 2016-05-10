@@ -1,8 +1,8 @@
-/*
-    version: 2.0.0
-    date: 2016-04-30
+/*!=
+    version: 2.0.1
+    date: 2016-05-10
     author: 狼族小狈
-    github：https://github.com/1340641314/fors
+    github：https://github.com/1340641314/lazyloadImg
 */
 !(function (LazyloadImg) {
     if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
@@ -35,6 +35,9 @@
         this.error = function (el) {}; //加载失败后回调方法
         this.qriginal = false; //是否将图片处理成正方形,true处理成正方形，false不处理
 
+        //监听的事件列表
+        this.monitorEvent = ['DOMContentLoaded', 'load', 'click', 'touchstart', 'touchend', 'haschange', 'online', 'pageshow', 'popstate', 'resize', 'storage', 'mousewheel', 'scroll'];
+
         for (var key in myset) { //覆盖配置
             this[key] = myset[key];
         }
@@ -54,11 +57,11 @@
             return /\[data-([a-z]+)\]$/.exec(_this.el)[1] || 'src';
         })();
         //事件绑定
-        var eventList = ['DOMContentLoaded', 'load', 'click', 'touchstart', 'touchend', 'haschange', 'online', 'pageshow', 'popstate', 'resize', 'storage', 'mousewheel', 'scroll'];
+        var eventList = this.monitorEvent;
+        this.start = this.start.bind(this);
         for (var i = 0; i < eventList.length; i++) {
-            document.addEventListener(eventList[i], this.eachDOM.bind(this), false);
+            window.addEventListener(eventList[i], this.start, false);
         }
-
     };
 
     /**
@@ -90,7 +93,7 @@
     /**
      * 遍历DOM元素
      */
-    LazyloadImg.prototype.eachDOM = function () {
+    LazyloadImg.prototype.start = function (e) {
         var list = document.querySelectorAll(this.el);
         var trueList = [];
         for (var i = 0; i < list.length; i++) {
@@ -153,7 +156,9 @@
             return _this.error.call(_this, el);
         }, false);
     };
-
+    /**
+     * 获取透明的图片
+     */
     LazyloadImg.prototype.getTransparent = (function () {
         var canvas = document.createElement('canvas');
         canvas.getContext('2d').globalAlpha = 0.0;
@@ -165,6 +170,17 @@
         };
 
     })();
+
+
+    /**
+     * 卸载插件
+     */
+    LazyloadImg.prototype.end = function () {
+        var eventList = this.monitorEvent;
+        for (var i = 0; i < eventList.length; i++) {
+            window.removeEventListener(eventList[i], this.start, false);
+        }
+    };
     return new LazyloadImg(myset);
 
 });
