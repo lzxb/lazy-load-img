@@ -1,20 +1,18 @@
 /*!=
-    version: 2.0.2
-    date: 2016-05-10
+    version: 2.0.3
+    date: 2016-05-12
     author: 狼族小狈
     github：https://github.com/1340641314/lazyloadImg
 */
 !(function (LazyloadImg) {
     if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-        define(function () {
-            return LazyloadImg;
-        });
+        define(LazyloadImg);
     } else if (typeof module !== 'undefined' && module.exports) {
-        module.exports = LazyloadImg;
+        module.exports = LazyloadImg();
     } else {
-        window.LazyloadImg = LazyloadImg;
+        window.LazyloadImg = LazyloadImg();
     }
-})(function (myset) {
+})(function () {
     'use strict';
 
     /**
@@ -56,12 +54,8 @@
         this.src = (function () {
             return /\[data-([a-z]+)\]$/.exec(_this.el)[1] || 'src';
         })();
-        //事件绑定
-        var eventList = this.monitorEvent;
-        this.start = this.start.bind(this);
-        for (var i = 0; i < eventList.length; i++) {
-            window.addEventListener(eventList[i], this.start, false);
-        }
+        this.eachDOM = this.eachDOM.bind(this);
+        this.start();
     };
 
     /**
@@ -91,9 +85,20 @@
     };
 
     /**
+     * 开始
+     */
+    LazyloadImg.prototype.start = function () {
+        var eventList = this.monitorEvent;
+        
+        for (var i = 0; i < eventList.length; i++) {
+            window.addEventListener(eventList[i], this.eachDOM, false);
+        }
+        this.eachDOM();
+    };
+    /**
      * 遍历DOM元素
      */
-    LazyloadImg.prototype.start = function (e) {
+    LazyloadImg.prototype.eachDOM = function (e) {
         var list = document.querySelectorAll(this.el);
         var trueList = [];
         for (var i = 0; i < list.length; i++) {
@@ -163,8 +168,8 @@
         var canvas = document.createElement('canvas');
         canvas.getContext('2d').globalAlpha = 0.0;
         return function (w, h) {
-//            canvas.width = Math.round(w * (10 / w));
-//            canvas.height = Math.round(h * (10 / h));
+            //            canvas.width = Math.round(w * (10 / w));
+            //            canvas.height = Math.round(h * (10 / h));
             canvas.width = w;
             canvas.height = h;
             var data = canvas.toDataURL('image/png');
@@ -180,9 +185,9 @@
     LazyloadImg.prototype.end = function () {
         var eventList = this.monitorEvent;
         for (var i = 0; i < eventList.length; i++) {
-            window.removeEventListener(eventList[i], this.start, false);
+            window.removeEventListener(eventList[i], this.eachDOM, false);
         }
     };
-    return new LazyloadImg(myset);
+    return LazyloadImg;
 
 });
