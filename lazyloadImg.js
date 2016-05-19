@@ -1,6 +1,6 @@
 /*!=
-    version: 2.0.3
-    date: 2016-05-12
+    version: 2.0.4
+    date: 2016-05-19
     author: 狼族小狈
     github：https://github.com/1340641314/lazyloadImg
 */
@@ -89,7 +89,7 @@
      */
     LazyloadImg.prototype.start = function () {
         var eventList = this.monitorEvent;
-        
+
         for (var i = 0; i < eventList.length; i++) {
             window.addEventListener(eventList[i], this.eachDOM, false);
         }
