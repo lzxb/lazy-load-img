@@ -1,10 +1,11 @@
 /*!=
-    version: 2.0.4
-    date: 2016-05-19
+    version: 2.0.5
+    date: 2016-05-28
     author: 狼族小狈
     github：https://github.com/1340641314/lazyloadImg
 */
 !(function (LazyloadImg) {
+    'use strict';
     if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
         define(LazyloadImg);
     } else if (typeof module !== 'undefined' && module.exports) {
@@ -147,7 +148,7 @@
         img.addEventListener('load', function () {
 
             if (_this.qriginal) {
-                el.src = _this.getTransparent(el.width, el.height);
+                el.src = _this.getTransparent(el.src, el.width, el.height);
                 el.className += ' LazyloadImg-qriginal';
                 el.style.backgroundImage = 'url(' + img.src + ')';
             } else {
@@ -167,12 +168,14 @@
     LazyloadImg.prototype.getTransparent = (function () {
         var canvas = document.createElement('canvas');
         canvas.getContext('2d').globalAlpha = 0.0;
-        return function (w, h) {
-            //            canvas.width = Math.round(w * (10 / w));
-            //            canvas.height = Math.round(h * (10 / h));
+        var images = {};
+        
+        return function (src, w, h) {
+            if(images[src]) return images[src]; //已经同样路径的已经生成过，无需重复生成浪费资源
             canvas.width = w;
-            canvas.height = h;
+            canvas.height = h; 
             var data = canvas.toDataURL('image/png');
+            images[src] = data;
             return data;
         };
 
