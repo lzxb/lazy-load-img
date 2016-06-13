@@ -30,8 +30,8 @@
         this.bottom = 0; //元素在底部伸出的距离才加载
         this.left = 0; //元素在左边伸出的距离才加载
 
-        this.load = function (el) {}; //加载成功后回调方法
-        this.error = function (el) {}; //加载失败后回调方法
+        this.load = function (el) { }; //加载成功后回调方法
+        this.error = function (el) { }; //加载失败后回调方法
         this.qriginal = false; //是否将图片处理成正方形,true处理成正方形，false不处理
 
         //监听的事件列表
@@ -169,11 +169,11 @@
         var canvas = document.createElement('canvas');
         canvas.getContext('2d').globalAlpha = 0.0;
         var images = {};
-        
+
         return function (src, w, h) {
-            if(images[src]) return images[src]; //已经同样路径的已经生成过，无需重复生成浪费资源
+            if (images[src]) return images[src]; //已经同样路径的已经生成过，无需重复生成浪费资源
             canvas.width = w;
-            canvas.height = h; 
+            canvas.height = h;
             var data = canvas.toDataURL('image/png');
             images[src] = data;
             return data;

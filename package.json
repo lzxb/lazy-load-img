@@ -1,0 +1,26 @@
+{
+  "name": "lazy-load-img",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lazyloadImg.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1340641314/LazyloadImg.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1340641314/LazyloadImg/issues"
+  },
+  "homepage": "https://github.com/1340641314/LazyloadImg#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3"
+  }
+}
