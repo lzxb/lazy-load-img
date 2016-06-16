@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var babel = require('gulp-babel');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var saveLicense = require('uglify-save-license');
 
 /**
  * (开始执行)
@@ -12,7 +13,9 @@ function start() {
     return gulp.src('src/*.js')
         .pipe(babel({ 'presets': ['es2015'] }))
         .pipe(rename({ suffix: '.min' }))
-        .pipe(uglify()) //压缩
+        .pipe(uglify({
+            preserveComments: saveLicense
+        })) //压缩
         .pipe(gulp.dest('dist'));
 }
 
