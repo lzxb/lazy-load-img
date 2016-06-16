@@ -1,5 +1,10 @@
 ### LazyloadImg
 
+### 安装
+```
+  npm install lazy-load-img --save
+```
+
 ### 优势
 ```
 1.原生js开发，不依赖任何框架或库
