@@ -30,7 +30,7 @@
     //开始图片懒加载事件监听：lazyloadImg.start();
 ```
 ### api
-```
+```javascript
     lazyloadImg.start(); //开始启动程序，会绑定相关的事件，并且来检测符合加载条件的元素
     lazyloadImg.end(); //结束程序，会解除绑定所有的相关事件，释放内存
     lazyloadImg.eachDOM(); //检测匹配的元素，符合条件的，会立即加载
