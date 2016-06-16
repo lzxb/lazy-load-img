@@ -30,8 +30,9 @@
         this.bottom = 0; //元素在底部伸出的距离才加载
         this.left = 0; //元素在左边伸出的距离才加载
 
-        this.load = function (el) { }; //加载成功后回调方法
-        this.error = function (el) { }; //加载失败后回调方法
+        this.before = () => { }; //加载之前执行方法
+        this.load = (el) => { }; //加载成功后回调方法
+        this.error = (el) => { }; //加载失败后回调方法
         this.qriginal = false; //是否将图片处理成正方形,true处理成正方形，false不处理
 
         //监听的事件列表
@@ -52,7 +53,7 @@
             this.src = (() => {
                 return /\[data-([a-z]+)\]$/.exec(this.el)[1] || 'src';
             })();
-            this.eachDOM = this.eachDOM.bind(this);
+
             this.start();
         };
 
@@ -94,7 +95,7 @@
         /**
          * 遍历DOM元素
          */
-        this.eachDOM = (e) => {
+        this.eachDOM = () => {
             var list = document.querySelectorAll(this.el);
             var trueList = [];
             for (let i = 0; i < list.length; i++) {
@@ -137,6 +138,7 @@
             var img = new Image();
             img.src = src;
 
+            this.before.call(this, el);
             img.addEventListener('load', () => {
 
                 if (this.qriginal) {
