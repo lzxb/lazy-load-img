@@ -1,4 +1,6 @@
- [![npm](https://img.shields.io/npm/v/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/lazy-load-img) [![npm](https://img.shields.io/npm/dt/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/lazy-load-img) [![npm](https://img.shields.io/npm/l/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/lazy-load-img)
+
+ [![npm](https://img.shields.io/npm/v/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/lazy-load-img) [![npm](https://img.shields.io/npm/dt/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/lazy-load-img) [![npm](https://img.shields.io/npm/l/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/flex.css)
+
 
 ### 安装
 ```
