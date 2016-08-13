@@ -1,6 +1,6 @@
 {
   "name": "lazy-load-img",
-  "version": "2.1.0",
+  "version": "2.1.3",
   "description": "",
   "main": "dist/lazyloadImg.min.js",
   "keywords": ["lazy load img", "load img", "lazy img"],
