@@ -46,6 +46,6 @@
     lazyloadImg.getTransparent(src, width, height); //生成一张透明的图片，参数分别是：图片地址，宽度，高度
 ```
 ### demo
-![二维码](https://github.com/1340641314/lazy-load-img/raw/master/shot/index.png)
+ [![demo](https://github.com/1340641314/react-cnode/raw/master/shot/index.png)](http://1340641314.github.io/lazy-load-img/)
 ### demo2 将各种宽高不一的图标剪切成默认图片的尺寸大小
-![二维码](https://github.com/1340641314/lazy-load-img/raw/master/shot/index2.png)
+ [![demo](https://github.com/1340641314/react-cnode/raw/master/shot/index2.png)](http://1340641314.github.io/lazy-load-img/index2.html)
