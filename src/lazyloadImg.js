@@ -2,7 +2,7 @@
     version: 2.0.6
     date: 2016-06-16
     author: 狼族小狈
-    github：https://github.com/1340641314/lazyloadImg
+    github：https://github.com/lzxb/lazyloadImg
 */
 !(function (LazyloadImg) {
     'use strict';
