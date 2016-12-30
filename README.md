@@ -48,7 +48,7 @@
 
 
 #### 效果演示
-[![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/mode-default.png)](http://lzxb.github.io/lazy-load-img/mode-default.html)
+[![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/mode-default.png)](http://lzxb.github.io/lazy-load-img/examples/mode-default.html)
 
 
 
@@ -88,4 +88,4 @@
 
 
 #### 效果演示
- [![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/mode-diy.png)](http://lzxb.github.io/lazy-load-img/mode-diy.html.html)
+ [![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/mode-diy.png)](http://lzxb.github.io/lazy-load-img/examples/mode-diy.html.html)
