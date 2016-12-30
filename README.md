@@ -77,5 +77,5 @@
   // lazyLoadImg.start() // 重新开启懒加载程序
   // lazyLoadImg.destroy() // 销毁图片懒加载程序
 ``` 
-#### 效果
+#### 效果演示
  [![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/index2.png)](http://lzxb.github.io/lazy-load-img/mode-diy.html.html)
