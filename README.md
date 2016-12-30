@@ -42,6 +42,9 @@
   // lazyLoadImg.start() // 重新开启懒加载程序
   // lazyLoadImg.destroy() // 销毁图片懒加载程序
 ```
+#### demo
+[![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/index.png)](http://lzxb.github.io/lazy-load-img/mode-default.html)
+
 ### 自定义模式
 ```javascript
   var lazyLoadImg = new LazyLoadImg({
@@ -73,8 +76,6 @@
 
   // lazyLoadImg.start() // 重新开启懒加载程序
   // lazyLoadImg.destroy() // 销毁图片懒加载程序
-```
-### 普通模式
- [![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/index.png)](http://lzxb.github.io/lazy-load-img/mode-default.html)
-### 自定义模式
+``` 
+#### demo
  [![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/index2.png)](http://lzxb.github.io/lazy-load-img/mode-diy.html.html)
