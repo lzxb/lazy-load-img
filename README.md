@@ -15,6 +15,8 @@
   完美解决移动端开发中，用户上传图片宽高不一致而导致的图片变形的问题
 3.简洁的API，让你分分钟入门！！！
 ```
+
+
 ### 默认模式
 ```javascript
   var lazyLoadImg = new LazyLoadImg({
@@ -42,8 +44,13 @@
   // lazyLoadImg.start() // 重新开启懒加载程序
   // lazyLoadImg.destroy() // 销毁图片懒加载程序
 ```
+
+
+
 #### 效果演示
 [![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/mode-default.png)](http://lzxb.github.io/lazy-load-img/mode-default.html)
+
+
 
 ### 自定义模式
 ```javascript
@@ -77,5 +84,8 @@
   // lazyLoadImg.start() // 重新开启懒加载程序
   // lazyLoadImg.destroy() // 销毁图片懒加载程序
 ``` 
+
+
+
 #### 效果演示
  [![demo](https://github.com/lzxb/lazy-load-img/raw/master/shot/mode-diy.png)](http://lzxb.github.io/lazy-load-img/mode-diy.html.html)
