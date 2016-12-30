@@ -4,7 +4,6 @@ const _win = window
 
 class LazyLoadImg {
     constructor(options = {}) {
-
         this.options = {
             el: null, //选择的元素
             mode: 'default', //默认模式，将显示原图，diy模式，将自定义剪切，默认剪切居中部分

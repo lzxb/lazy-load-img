@@ -83,7 +83,6 @@ var LazyLoadImg = function () {
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         classCallCheck(this, LazyLoadImg);
 
-
         this.options = {
             el: null, //选择的元素
             mode: 'default', //默认模式，将显示原图，diy模式，将自定义剪切，默认剪切居中部分
