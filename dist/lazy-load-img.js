@@ -78,18 +78,17 @@ var _extends = Object.assign || function (target) {
   return target;
 };
 
-var _win = window;
-
 var LazyLoadImg = function () {
-    function LazyLoadImg(options) {
-        var _this = this;
-
+    function LazyLoadImg() {
+        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         classCallCheck(this, LazyLoadImg);
 
 
         this.options = {
             el: null, //选择的元素
             mode: 'default', //默认模式，将显示原图，diy模式，将自定义剪切，默认剪切居中部分
+            time: 300, // 设置一个检测时间间隔
+            complete: true, //页面内所有数据图片加载完成后，是否自己销毁程序，true默认销毁，false不销毁
             diy: { //此属性，只有在设置diy 模式时才生效
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
@@ -112,42 +111,41 @@ var LazyLoadImg = function () {
             }
         };
 
-        this.eventListener = ['DOMContentLoaded', 'load', 'click', 'touchstart', 'touchend', 'haschange', 'online', 'pageshow', 'popstate', 'resize', 'storage', 'mousewheel', 'scroll'];
-
-        this.filters = function () {
-            //过滤元素，符合条件的加载
-            var list = Array.prototype.slice.apply(_this.options.el.querySelectorAll('[data-src]'));
-            list.forEach(function (el) {
-                if (!el.dataset.LazyLoadImgState && testMeet(el)) {
-                    _this.loadImg(el);
-                }
-            });
-        };
-        _extends(this.options.position, options.position);
-        _extends(this.options.diy, options.diy);
+        _extends(this.options.position, options.position || {});
+        _extends(this.options.diy, options.diy || {});
         _extends(this.options, options);
+        this._timer = true;
         this.start();
-        var timer = setTimeout(function () {
-            //异步执行
-            _this.filters(); //实例化后，手动触发一次
-            clearTimeout(timer);
-        }, 0);
     }
 
     createClass(LazyLoadImg, [{
         key: 'start',
         value: function start() {
-            var _this2 = this;
+            var _this = this;
 
-            //绑定事件
-            this.eventListener.forEach(function (name) {
-                return _win.addEventListener(name, _this2.filters, false);
-            });
+            var options = this.options;
+
+            clearTimeout(this._timer); //清除定时器
+            if (!this._timer) return;
+            this._timer = setTimeout(function () {
+                var list = Array.prototype.slice.apply(options.el.querySelectorAll('[data-src]'));
+
+                if (!list.length && options.complete) {
+                    return clearTimeout(_this._timer); // 有页面内的图片加载完成了，自己销毁程序
+                } else {
+                    list.forEach(function (el) {
+                        if (!el.dataset.LazyLoadImgState && testMeet(el, options.position)) {
+                            _this.loadImg(el);
+                        }
+                    });
+                }
+                _this.start();
+            }, options.time);
         }
     }, {
         key: 'loadImg',
         value: function loadImg(el) {
-            var _this3 = this;
+            var _this2 = this;
 
             //加载图片
             var options = this.options;
@@ -168,23 +166,20 @@ var LazyLoadImg = function () {
                 }
                 delete el.dataset.src;
                 el.dataset.LazyLoadImgState = 'success';
-                return options.success.call(_this3, el);
+                return options.success.call(_this2, el);
             }, false);
 
             img.addEventListener('error', function () {
+                delete el.dataset.src;
                 el.dataset.LazyLoadImgState = 'error';
-                options.error.call(_this3, el);
+                options.error.call(_this2, el);
             }, false);
         }
     }, {
         key: 'destroy',
         value: function destroy() {
-            var _this4 = this;
-
             //解除事件绑定
-            this.eventListener.forEach(function (name) {
-                return _win.removeEventListener(name, _this4.filters, false);
-            });
+            delete this._timer;
         }
     }]);
     return LazyLoadImg;

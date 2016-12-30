@@ -3,7 +3,31 @@
     margin: 0;
     list-style: none;
 }
+
 img {
     border: none;
     width: 100%;
+}
+
+.success {
+    -webkit-animation: fadeIn 01s ease 0.2s 1 both;
+    animation: fadeIn 1s ease 0.2s 1 both;
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

@@ -3,11 +3,13 @@ import getTransparent from './lib/get-transparent'
 const _win = window
 
 class LazyLoadImg {
-    constructor(options) {
+    constructor(options = {}) {
 
         this.options = {
             el: null, //选择的元素
             mode: 'default', //默认模式，将显示原图，diy模式，将自定义剪切，默认剪切居中部分
+            time: 300, // 设置一个检测时间间隔
+            complete: true, //页面内所有数据图片加载完成后，是否自己销毁程序，true默认销毁，false不销毁
             diy: { //此属性，只有在设置diy 模式时才生效
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
@@ -30,29 +32,31 @@ class LazyLoadImg {
             }
         }
 
-        this.eventListener = ['DOMContentLoaded', 'load', 'click', 'touchstart', 'touchend', 'haschange', 'online', 'pageshow', 'popstate', 'resize', 'storage', 'mousewheel', 'scroll']
-
-
-
-        this.filters = () => { //过滤元素，符合条件的加载
-            var list = Array.prototype.slice.apply(this.options.el.querySelectorAll('[data-src]'))
-            list.forEach((el) => {
-                if (!el.dataset.LazyLoadImgState && testMeet(el)) {
-                    this.loadImg(el)
-                }
-            })
-        }
-        Object.assign(this.options.position, options.position)
-        Object.assign(this.options.diy, options.diy)
+        Object.assign(this.options.position, options.position || {})
+        Object.assign(this.options.diy, options.diy || {})
         Object.assign(this.options, options)
+        this._timer = true
         this.start()
-        const timer = setTimeout(() => { //异步执行
-            this.filters() //实例化后，手动触发一次
-            clearTimeout(timer)
-        }, 0)
     }
-    start() { //绑定事件
-        this.eventListener.forEach((name) => _win.addEventListener(name, this.filters, false))
+    start() {
+        var { options } = this
+        clearTimeout(this._timer) //清除定时器
+        if (!this._timer) return
+        this._timer = setTimeout(() => {
+            var list = Array.prototype.slice.apply(options.el.querySelectorAll('[data-src]'))
+
+
+            if (!list.length && options.complete) {
+                return clearTimeout(this._timer) // 有页面内的图片加载完成了，自己销毁程序
+            } else {
+                list.forEach((el) => {
+                    if (!el.dataset.LazyLoadImgState && testMeet(el, options.position)) {
+                        this.loadImg(el)
+                    }
+                })
+            }
+            this.start()
+        }, options.time)
     }
     loadImg(el) { //加载图片
         var { options } = this
@@ -76,12 +80,13 @@ class LazyLoadImg {
         }, false)
 
         img.addEventListener('error', () => {
+            delete el.dataset.src
             el.dataset.LazyLoadImgState = 'error'
             options.error.call(this, el)
         }, false)
     }
     destroy() { //解除事件绑定
-        this.eventListener.forEach((name) => _win.removeEventListener(name, this.filters, false))
+        delete this._timer
     }
 }
 
