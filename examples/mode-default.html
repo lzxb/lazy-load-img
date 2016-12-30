@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>默认模式，不对图片进行剪切</title>
+    <link rel="stylesheet" href="./style/common.css">
+</head>
+
+<body>
+    <ul id="list">
+    </ul>
+    <script src="../dist/lazy-load-img.js"></script>
+    <script>
+        ; (function () {
+            var ul = document.getElementById('list')
+
+            for (var i = 1; i <= 21; i++) {
+                var li = document.createElement('li')
+                li.innerHTML = '<img src="./images/default.png" data-src="./images/' + i + '.jpg">'
+                ul.appendChild(li)
+            }
+            var lazyLoadImg = new LazyLoadImg({
+                el: document.querySelector('#list'),
+                mode: 'default',
+                position: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                },
+                before: function () {
+
+                },
+                success: function (el) {
+                    el.classList.add('success')
+                },
+                error: function (el) {
+                    el.src = './images/error.png'
+                }
+            })
+        })()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+img {
+    border: none;
+    width: 100%;
+}
