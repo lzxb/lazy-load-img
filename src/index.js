@@ -68,8 +68,8 @@ class LazyLoadImg {
 
             if (options.mode == 'diy') {
                 el.src = getTransparent(el.src, el.width, el.height)
+                options.diy.backgroundImage = 'url(' + img.src + ')'
                 Object.assign(el.style, options.diy)
-                el.style.backgroundImage = 'url(' + img.src + ')'
             } else {
                 el.src = img.src
             }
