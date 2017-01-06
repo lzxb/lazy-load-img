@@ -2,11 +2,12 @@
  [![npm](https://img.shields.io/npm/v/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/lazy-load-img) [![npm](https://img.shields.io/npm/dt/lazy-load-img.svg?style=flat-square)](https://www.npmjs.com/package/lazy-load-img) 
 
 
-
 ### 安装
 ```
-  npm install lazy-load-img --save
+npm install lazy-load-img --save
 ```
+vue使用，请移动至[vue-lazy-load-img](https://github.com/lzxb/vue-lazy-load-img)
+
 
 ### 优势
 ```
