@@ -109,9 +109,8 @@ var LazyLoadImg = function () {
 
             }
         };
-
-        _extends(this.options.position, options.position || {});
-        _extends(this.options.diy, options.diy || {});
+        options.position = _extends({}, this.options.position, options.position);
+        options.diy = _extends({}, this.options.diy, options.diy);
         _extends(this.options, options);
         this._timer = true;
         this.start();

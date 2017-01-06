@@ -30,9 +30,8 @@ class LazyLoadImg {
 
             }
         }
-
-        Object.assign(this.options.position, options.position || {})
-        Object.assign(this.options.diy, options.diy || {})
+        options.position = Object.assign({}, this.options.position, options.position)
+        options.diy = Object.assign({}, this.options.diy, options.diy)
         Object.assign(this.options, options)
         this._timer = true
         this.start()
