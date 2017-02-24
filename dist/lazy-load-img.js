@@ -1,89 +1,199 @@
-!function (t, e) {
-    "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : t.LazyLoadImg = e()
-}(this, function () {
-    "use strict";
-    var t = function (t) {
-        var e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, o = t.getBoundingClientRect(), r = t.offsetWidth, n = t.offsetHeight, i = window.innerWidth, a = window.innerHeight, s = !(o.right - e.left <= 0 && o.left + r - e.left <= 0 || o.left + e.right >= i && o.right + e.right >= r + i), c = !(o.bottom - e.top <= 0 && o.top + n - e.top <= 0 || o.top + e.bottom >= a && o.bottom + e.bottom >= n + a);
-        return 0 != t.width && 0 != t.height && s && c
-    }, e = document.createElement("canvas");
-    e.getContext("2d").globalAlpha = 0;
-    var o = {}, r = function (t, r, n) {
-        if (o[t])return o[t];
-        e.width = r, e.height = n;
-        var i = e.toDataURL("image/png");
-        return o[t] = i, i
-    }, n = function (t, e) {
-        if (!(t instanceof e))throw new TypeError("Cannot call a class as a function")
-    }, i = function () {
-        function t(t, e) {
-            for (var o = 0; o < e.length; o++) {
-                var r = e[o];
-                r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), Object.defineProperty(t, r.key, r)
-            }
-        }
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.LazyLoadImg = factory());
+}(this, (function () { 'use strict';
 
-        return function (e, o, r) {
-            return o && t(e.prototype, o), r && t(e, r), e
-        }
-    }(), a = Object.assign || function (t) {
-            for (var e = 1; e < arguments.length; e++) {
-                var o = arguments[e];
-                for (var r in o)Object.prototype.hasOwnProperty.call(o, r) && (t[r] = o[r])
-            }
-            return t
-        }, s = function () {
-        function e() {
-            var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-            n(this, e);
-            var o = 0, r = 0;
-            this.options = {
-                el: document.querySelector("body"),
-                mode: "default",
-                time: 300,
-                resolve: !0,
-                diy: {backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center center"},
-                errorImage: "./images/error.png",
-                position: {top: 0, right: 0, bottom: 0, left: 0},
-                before: function () {
-                },
-                success: function () {
-                    o++
-                },
-                error: function (t) {
-                    r++, t.src = this.options.errorImage
-                },
-                complete: function () {
-                    console.log("complete"), console.log("success " + o), console.log("failed " + r)
-                }
-            }, t.position = a({}, this.options.position, t.position), t.diy = a({}, this.options.diy, t.diy), a(this.options, t), this._timer = !0, this.start()
-        }
+var testMeet = function (el) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-        return i(e, [{
-            key: "start", value: function () {
-                var e = this, o = this.options;
-                clearTimeout(this._timer), this._timer && (this._timer = setTimeout(function () {
-                    var r = Array.prototype.slice.apply(o.el.querySelectorAll("[data-src]"));
-                    return !r.length && o.resolve ? (clearTimeout(e._timer), o.complete.call()) : (r.forEach(function (r) {
-                        !r.dataset.LazyLoadImgState && t(r, o.position) && e.loadImg(r)
-                    }), void e.start())
-                }, o.time))
+  // 取得元素在可视区的位置（相对浏览器视窗）左右上下
+  var bcr = el.getBoundingClientRect();
+  // padding+border+width
+  var mw = el.offsetWidth; // 元素自身宽度
+  var mh = el.offsetHeight; // 元素自身的高度
+  // 包含了导航栏
+  var w = window.innerWidth; // 视窗的宽度
+  var h = window.innerHeight; // 视窗的高度
+
+  var boolX = !(bcr.right - options.left <= 0 && bcr.left + mw - options.left <= 0) && !(bcr.left + options.right >= w && bcr.right + options.right >= mw + w); // 左右符合条件
+  var boolY = !(bcr.bottom - options.top <= 0 && bcr.top + mh - options.top <= 0) && !(bcr.top + options.bottom >= h && bcr.bottom + options.bottom >= mh + h); // 上下符合条件
+  return el.width !== 0 && el.height !== 0 && boolX && boolY;
+};
+
+var canvas = document.createElement('canvas');
+canvas.getContext('2d').globalAlpha = 0.0;
+var images = {};
+
+var getTransparent = function (src, w, h) {
+  if (images[src]) return images[src];
+  canvas.width = w;
+  canvas.height = h;
+  var data = canvas.toDataURL('image/png');
+  images[src] = data;
+  return data;
+};
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var _win = window;
+
+var LazyLoadImg = function () {
+  // 构造函数 初始化参数
+  function LazyLoadImg() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    classCallCheck(this, LazyLoadImg);
+
+    this.options = {
+      el: document.querySelector('body'), // 选择的元素
+      mode: 'default', // 默认模式，将显示原图，diy模式，将自定义剪切，默认剪切居中部分
+      time: 300, // 设置一个检测时间间隔
+      done: true, // 页面内所有数据图片加载完成后，是否自己销毁程序，true默认销毁，false不销毁：FALSE应用场景：页面异步不断获取数据的情况下 需要实时监听则不销毁
+      diy: { // 此属性，只有在设置diy 模式时才生效
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center'
+      },
+      position: { // 只要其中一个位置符合条件，都会触发加载机制
+        top: 0, // 元素距离顶部
+        right: 0, // 元素距离右边
+        bottom: 0, // 元素距离下面
+        left: 0 // 元素距离左边
+      },
+      before: function before(el) {// 图片加载之前，执行钩子函数
+
+      },
+      success: function success(el) {// 图片加载成功，执行钩子函数
+
+      },
+      error: function error(el) {// 图片加载失败，执行的钩子函数
+
+      }
+    };
+    // 深拷贝 如果都有 则右面的值 option.position会覆盖this.options.position
+    options.position = _extends({}, this.options.position, options.position);
+    options.diy = _extends({}, this.options.diy, options.diy);
+    _extends(this.options, options);
+    this._timer = true;
+    this.start();
+  }
+
+  createClass(LazyLoadImg, [{
+    key: 'start',
+    value: function start() {
+      var _this = this;
+
+      var options = this.options;
+
+      clearTimeout(this._timer); // 清除定时器
+      if (!this._timer) return;
+      // this._timer 是setTimeout的return flag 推荐采用settimeout的方法，而不是setinterval
+      this._timer = setTimeout(function () {
+        var list = Array.prototype.slice.apply(options.el.querySelectorAll('[data-src]'));
+        // 如果list.length为0 且页面内图片已经加载完毕 清空setTimeout循环
+        if (!list.length && options.done) {
+          clearTimeout(_this._timer); // 有页面内的图片加载完成了，自己销毁程序
+        } else {
+          list.forEach(function (el) {
+            // 如果该元素状态为空（dataset HTML5方法 设置、获取属性）；并且检测该元素的位置
+            if (!el.dataset.LazyLoadImgState && testMeet(el, options.position)) {
+              _this.loadImg(el);
             }
-        }, {
-            key: "loadImg", value: function (t) {
-                var e = this, o = this.options;
-                t.dataset.LazyLoadImgState = "start", o.before.call(this, t);
-                var n = new Image;
-                n.src = t.dataset.src, n.addEventListener("load", function () {
-                    return "diy" == o.mode ? (t.src = r(t.src, t.width, t.height), o.diy.backgroundImage = "url(" + n.src + ")", a(t.style, o.diy)) : t.src = n.src, delete t.dataset.src, t.dataset.LazyLoadImgState = "success", o.success.call(e, t)
-                }, !1), n.addEventListener("error", function () {
-                    delete t.dataset.src, t.dataset.LazyLoadImgState = "error", o.error.call(e, t)
-                }, !1)
-            }
-        }, {
-            key: "destroy", value: function () {
-                delete this._timer
-            }
-        }]), e
-    }();
-    return s
-});
+          });
+        }
+        // call it
+        _this.start();
+      }, options.time);
+    }
+  }, {
+    key: 'loadImg',
+    value: function loadImg(el) {
+      var _this2 = this;
+
+      // 加载图片
+      var options = this.options;
+
+      el.dataset.LazyLoadImgState = 'start';
+      // 执行加载之前做的事情
+      options.before.call(this, el);
+      var img = new _win.Image();
+      // 这里是一个坑 dataset.src 实际取的值是 属性data-src data- 是HTML5 DOMStringMap对象
+      img.src = el.dataset.src;
+
+      // 图片加载成功
+      img.addEventListener('load', function () {
+        if (options.mode === 'diy') {
+          el.src = getTransparent(el.src, el.width, el.height);
+          options.diy.backgroundImage = 'url(' + img.src + ')';
+          _extends(el.style, options.diy);
+        } else {
+          el.src = img.src;
+        }
+        delete el.dataset.src;
+        el.dataset.LazyLoadImgState = 'success';
+        return options.success.call(_this2, el);
+      }, false);
+
+      // 图片加载失败
+      img.addEventListener('error', function () {
+        delete el.dataset.src;
+        el.dataset.LazyLoadImgState = 'error';
+        options.error.call(_this2, el);
+      }, false);
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      // 解除事件绑定
+      delete this._timer;
+    }
+  }]);
+  return LazyLoadImg;
+}();
+
+return LazyLoadImg;
+
+})));
+//# sourceMappingURL=lazy-load-img.js.map
