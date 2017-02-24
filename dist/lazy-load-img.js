@@ -7,17 +7,17 @@
 var testMeet = function (el) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    var bcr = el.getBoundingClientRect(); //取得元素在可视区的位置
-
+    //取得元素在可视区的位置（相对浏览器视窗）左右上下
+    var bcr = el.getBoundingClientRect();
+    //padding+border+width
     var mw = el.offsetWidth; //元素自身宽度
     var mh = el.offsetHeight; //元素自身的高度
+    //包含了导航栏
     var w = window.innerWidth; //视窗的宽度
     var h = window.innerHeight; //视窗的高度
 
-    var boolX = !(bcr.right - options.left <= 0 && bcr.left + mw - options.left <= 0) && !(bcr.left + options.right >= w && bcr.right + options.right >= mw + w); //上下符合条件
+    var boolX = !(bcr.right - options.left <= 0 && bcr.left + mw - options.left <= 0) && !(bcr.left + options.right >= w && bcr.right + options.right >= mw + w); //左右符合条件
     var boolY = !(bcr.bottom - options.top <= 0 && bcr.top + mh - options.top <= 0) && !(bcr.top + options.bottom >= h && bcr.bottom + options.bottom >= mh + h); //上下符合条件
-
-
     return el.width != 0 && el.height != 0 && boolX && boolY;
 };
 
@@ -79,20 +79,24 @@ var _extends = Object.assign || function (target) {
 };
 
 var LazyLoadImg = function () {
+    //构造函数 初始化参数
     function LazyLoadImg() {
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         classCallCheck(this, LazyLoadImg);
 
+        var succssNum = 0,
+            errorNuM = 0;
         this.options = {
-            el: null, //选择的元素
+            el: document.querySelector('body'), //选择的元素
             mode: 'default', //默认模式，将显示原图，diy模式，将自定义剪切，默认剪切居中部分
             time: 300, // 设置一个检测时间间隔
-            complete: true, //页面内所有数据图片加载完成后，是否自己销毁程序，true默认销毁，false不销毁
+            resolve: true, //页面内所有数据图片加载完成后，是否自己销毁程序，true默认销毁，false不销毁：FALSE应用场景：页面异步不断获取数据的情况下 需要实时监听则不销毁
             diy: { //此属性，只有在设置diy 模式时才生效
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center center'
             },
+            errorImage: "./images/error.png",
             position: { // 只要其中一个位置符合条件，都会触发加载机制
                 top: 0, // 元素距离顶部
                 right: 0, // 元素距离右边
@@ -102,13 +106,22 @@ var LazyLoadImg = function () {
             before: function before() {// 图片加载之前，执行钩子函数
 
             },
-            success: function success() {// 图片加载成功，执行钩子函数
-
+            success: function success() {
+                // 图片加载成功，执行钩子函数
+                succssNum++;
             },
-            error: function error() {// 图片加载失败，执行的钩子函数
-
+            error: function error(el) {
+                // 图片加载失败，执行的钩子函数
+                errorNuM++;
+                el.src = this.options.errorImage;
+            },
+            complete: function complete() {
+                console.log("complete");
+                console.log("success " + succssNum);
+                console.log("failed " + errorNuM);
             }
         };
+        // 深拷贝 如果都有 则右面的值 option.position会覆盖this.options.position
         options.position = _extends({}, this.options.position, options.position);
         options.diy = _extends({}, this.options.diy, options.diy);
         _extends(this.options, options);
@@ -125,18 +138,22 @@ var LazyLoadImg = function () {
 
             clearTimeout(this._timer); //清除定时器
             if (!this._timer) return;
+            //this._timer 是setTimeout的return flag 推荐采用settimeout的方法，而不是setinterval
             this._timer = setTimeout(function () {
                 var list = Array.prototype.slice.apply(options.el.querySelectorAll('[data-src]'));
-
-                if (!list.length && options.complete) {
-                    return clearTimeout(_this._timer); // 有页面内的图片加载完成了，自己销毁程序
+                //如果list.length为0 且页面内图片已经加载完毕 清空setTimeout循环
+                if (!list.length && options.resolve) {
+                    clearTimeout(_this._timer); // 有页面内的图片加载完成了，自己销毁程序
+                    return options.complete.call();
                 } else {
                     list.forEach(function (el) {
+                        //如果该元素状态为空（dataset HTML5方法 设置、获取属性）；并且检测该元素的位置
                         if (!el.dataset.LazyLoadImgState && testMeet(el, options.position)) {
                             _this.loadImg(el);
                         }
                     });
                 }
+                // call it
                 _this.start();
             }, options.time);
         }
@@ -149,12 +166,13 @@ var LazyLoadImg = function () {
             var options = this.options;
 
             el.dataset.LazyLoadImgState = 'start';
+            //执行加载之前做的事情
             options.before.call(this, el);
             var img = new Image();
+            // 这里是一个坑 dataset.src 实际取的值是 属性data-src data- 是HTML5 DOMStringMap对象
             img.src = el.dataset.src;
 
             img.addEventListener('load', function () {
-
                 if (options.mode == 'diy') {
                     el.src = getTransparent(el.src, el.width, el.height);
                     options.diy.backgroundImage = 'url(' + img.src + ')';
