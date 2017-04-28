@@ -116,35 +116,33 @@ var LazyLoadImg = function () {
     options.position = _extends({}, this.options.position, options.position);
     options.diy = _extends({}, this.options.diy, options.diy);
     _extends(this.options, options);
-    this._timer = true;
     this.start();
   }
 
   createClass(LazyLoadImg, [{
     key: 'start',
     value: function start() {
+      this._timer = true;
+      this._start();
+    }
+  }, {
+    key: '_start',
+    value: function _start() {
       var _this = this;
 
       var options = this.options;
 
       clearTimeout(this._timer); // 清除定时器
       if (!this._timer) return;
-      // this._timer 是setTimeout的return flag 推荐采用settimeout的方法，而不是setinterval
       this._timer = setTimeout(function () {
         var list = Array.prototype.slice.apply(options.el.querySelectorAll('[data-src]'));
-        // 如果list.length为0 且页面内图片已经加载完毕 清空setTimeout循环
-        if (!list.length && options.done) {
-          clearTimeout(_this._timer); // 有页面内的图片加载完成了，自己销毁程序
-        } else {
-          list.forEach(function (el) {
-            // 如果该元素状态为空（dataset HTML5方法 设置、获取属性）；并且检测该元素的位置
-            if (!el.dataset.LazyLoadImgState && testMeet(el, options.position)) {
-              _this.loadImg(el);
-            }
-          });
-        }
-        // call it
-        _this.start();
+        if (!list.length && options.done) return clearTimeout(_this._timer);
+        list.forEach(function (el) {
+          if (!el.dataset.LazyLoadImgState && testMeet(el, options.position)) {
+            _this.loadImg(el);
+          }
+        });
+        _this._start();
       }, options.time);
     }
   }, {
@@ -156,12 +154,9 @@ var LazyLoadImg = function () {
       var options = this.options;
 
       el.dataset.LazyLoadImgState = 'start';
-      // 执行加载之前做的事情
       options.before.call(this, el);
       var img = new _win.Image();
-      // 这里是一个坑 dataset.src 实际取的值是 属性data-src data- 是HTML5 DOMStringMap对象
       img.src = el.dataset.src;
-
       // 图片加载成功
       img.addEventListener('load', function () {
         if (options.mode === 'diy') {
