@@ -72,14 +72,14 @@ class LazyLoadImg {
         el.src = img.src
       }
       delete el.dataset.src
-      el.dataset.LazyLoadImgState = 'success'
+      delete el.dataset.LazyLoadImgState
       return options.success.call(this, el)
     }, false)
 
     // 图片加载失败
     img.addEventListener('error', () => {
       delete el.dataset.src
-      el.dataset.LazyLoadImgState = 'error'
+      delete el.dataset.LazyLoadImgState
       options.error.call(this, el)
     }, false)
   }
