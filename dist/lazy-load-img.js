@@ -8,9 +8,9 @@ var testMeet = function (el) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   // 取得元素在可视区的位置（相对浏览器视窗）左右上下
-  var bcr = el.getBoundingClientRect();
+  var bcr = el.getBoundingClientRect
   // padding+border+width
-  var mw = el.offsetWidth; // 元素自身宽度
+  ();var mw = el.offsetWidth; // 元素自身宽度
   var mh = el.offsetHeight; // 元素自身的高度
   // 包含了导航栏
   var w = window.innerWidth; // 视窗的宽度
@@ -132,8 +132,8 @@ var LazyLoadImg = function () {
 
       var options = this.options;
 
-      clearTimeout(this._timer); // 清除定时器
-      if (!this._timer) return;
+      clearTimeout(this._timer // 清除定时器
+      );if (!this._timer) return;
       this._timer = setTimeout(function () {
         var list = Array.prototype.slice.apply(options.el.querySelectorAll('[data-src]'));
         if (!list.length && options.done) return clearTimeout(_this._timer);
@@ -167,14 +167,14 @@ var LazyLoadImg = function () {
           el.src = img.src;
         }
         delete el.dataset.src;
-        el.dataset.LazyLoadImgState = 'success';
+        delete el.dataset.LazyLoadImgState;
         return options.success.call(_this2, el);
-      }, false);
+      }, false
 
       // 图片加载失败
-      img.addEventListener('error', function () {
+      );img.addEventListener('error', function () {
         delete el.dataset.src;
-        el.dataset.LazyLoadImgState = 'error';
+        delete el.dataset.LazyLoadImgState;
         options.error.call(_this2, el);
       }, false);
     }
