@@ -1,6 +1,5 @@
 import testMeet from './lib/testMeet'
-import getTransparent from './lib/get-transparent'
-const _win = window
+import GetTransparent from './lib/get-transparent'
 
 class LazyLoadImg {
   // 构造函数 初始化参数
@@ -35,6 +34,7 @@ class LazyLoadImg {
     options.position = Object.assign({}, this.options.position, options.position)
     options.diy = Object.assign({}, this.options.diy, options.diy)
     Object.assign(this.options, options)
+    this._getTransparent = new GetTransparent()
     this.start()
   }
   start () {
@@ -60,12 +60,12 @@ class LazyLoadImg {
     var { options } = this
     el.dataset.LazyLoadImgState = 'start'
     options.before.call(this, el)
-    var img = new _win.Image()
+    var img = new window.Image()
     img.src = el.dataset.src
     // 图片加载成功
     img.addEventListener('load', () => {
       if (options.mode === 'diy') {
-        el.src = getTransparent(el.src, el.width, el.height)
+        el.src = this._getTransparent.toBase64(el.src, el.width, el.height)
         options.diy.backgroundImage = 'url(' + img.src + ')'
         Object.assign(el.style, options.diy)
       } else {
@@ -85,6 +85,7 @@ class LazyLoadImg {
   }
   destroy () { // 解除事件绑定
     delete this._timer
+    this._getTransparent.destroy()
   }
 }
 export default LazyLoadImg

@@ -8,9 +8,9 @@ var testMeet = function (el) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   // 取得元素在可视区的位置（相对浏览器视窗）左右上下
-  var bcr = el.getBoundingClientRect
+  var bcr = el.getBoundingClientRect();
   // padding+border+width
-  ();var mw = el.offsetWidth; // 元素自身宽度
+  var mw = el.offsetWidth; // 元素自身宽度
   var mh = el.offsetHeight; // 元素自身的高度
   // 包含了导航栏
   var w = window.innerWidth; // 视窗的宽度
@@ -19,19 +19,6 @@ var testMeet = function (el) {
   var boolX = !(bcr.right - options.left <= 0 && bcr.left + mw - options.left <= 0) && !(bcr.left + options.right >= w && bcr.right + options.right >= mw + w); // 左右符合条件
   var boolY = !(bcr.bottom - options.top <= 0 && bcr.top + mh - options.top <= 0) && !(bcr.top + options.bottom >= h && bcr.bottom + options.bottom >= mh + h); // 上下符合条件
   return el.width !== 0 && el.height !== 0 && boolX && boolY;
-};
-
-var canvas = document.createElement('canvas');
-canvas.getContext('2d').globalAlpha = 0.0;
-var images = {};
-
-var getTransparent = function (src, w, h) {
-  if (images[src]) return images[src];
-  canvas.width = w;
-  canvas.height = h;
-  var data = canvas.toDataURL('image/png');
-  images[src] = data;
-  return data;
 };
 
 var classCallCheck = function (instance, Constructor) {
@@ -78,7 +65,34 @@ var _extends = Object.assign || function (target) {
   return target;
 };
 
-var _win = window;
+var GetTransparent = function () {
+  function GetTransparent() {
+    classCallCheck(this, GetTransparent);
+
+    this.images = {};
+    this.canvas = document.createElement('canvas');
+    this.canvas.getContext('2d').globalAlpha = 0.0;
+  }
+
+  createClass(GetTransparent, [{
+    key: 'toBase64',
+    value: function toBase64(src, w, h) {
+      if (this.images[src]) return this.images[src];
+      this.canvas.width = w;
+      this.canvas.height = h;
+      var data = this.canvas.toDataURL('image/png');
+      this.images[src] = data;
+      return data;
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this.images = null;
+      this.canvas = null;
+    }
+  }]);
+  return GetTransparent;
+}();
 
 var LazyLoadImg = function () {
   // 构造函数 初始化参数
@@ -116,6 +130,7 @@ var LazyLoadImg = function () {
     options.position = _extends({}, this.options.position, options.position);
     options.diy = _extends({}, this.options.diy, options.diy);
     _extends(this.options, options);
+    this._getTransparent = new GetTransparent();
     this.start();
   }
 
@@ -132,8 +147,8 @@ var LazyLoadImg = function () {
 
       var options = this.options;
 
-      clearTimeout(this._timer // 清除定时器
-      );if (!this._timer) return;
+      clearTimeout(this._timer); // 清除定时器
+      if (!this._timer) return;
       this._timer = setTimeout(function () {
         var list = Array.prototype.slice.apply(options.el.querySelectorAll('[data-src]'));
         if (!list.length && options.done) return clearTimeout(_this._timer);
@@ -155,12 +170,12 @@ var LazyLoadImg = function () {
 
       el.dataset.LazyLoadImgState = 'start';
       options.before.call(this, el);
-      var img = new _win.Image();
+      var img = new window.Image();
       img.src = el.dataset.src;
       // 图片加载成功
       img.addEventListener('load', function () {
         if (options.mode === 'diy') {
-          el.src = getTransparent(el.src, el.width, el.height);
+          el.src = _this2._getTransparent.toBase64(el.src, el.width, el.height);
           options.diy.backgroundImage = 'url(' + img.src + ')';
           _extends(el.style, options.diy);
         } else {
@@ -169,10 +184,10 @@ var LazyLoadImg = function () {
         delete el.dataset.src;
         delete el.dataset.LazyLoadImgState;
         return options.success.call(_this2, el);
-      }, false
+      }, false);
 
       // 图片加载失败
-      );img.addEventListener('error', function () {
+      img.addEventListener('error', function () {
         delete el.dataset.src;
         delete el.dataset.LazyLoadImgState;
         options.error.call(_this2, el);
@@ -183,6 +198,7 @@ var LazyLoadImg = function () {
     value: function destroy() {
       // 解除事件绑定
       delete this._timer;
+      this._getTransparent.destroy();
     }
   }]);
   return LazyLoadImg;
