@@ -34,10 +34,12 @@ class LazyLoadImg {
     options.position = Object.assign({}, this.options.position, options.position)
     options.diy = Object.assign({}, this.options.diy, options.diy)
     Object.assign(this.options, options)
-    this._getTransparent = new GetTransparent()
     this.start()
   }
   start () {
+    if (!this._getTransparent) {
+      this._getTransparent = new GetTransparent()
+    }
     this._timer = true
     this._start()
   }
@@ -86,6 +88,7 @@ class LazyLoadImg {
   destroy () { // 解除事件绑定
     delete this._timer
     this._getTransparent.destroy()
+    this._getTransparent = null
   }
 }
 export default LazyLoadImg

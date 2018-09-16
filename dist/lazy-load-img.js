@@ -130,13 +130,15 @@ var LazyLoadImg = function () {
     options.position = _extends({}, this.options.position, options.position);
     options.diy = _extends({}, this.options.diy, options.diy);
     _extends(this.options, options);
-    this._getTransparent = new GetTransparent();
     this.start();
   }
 
   createClass(LazyLoadImg, [{
     key: 'start',
     value: function start() {
+      if (!this._getTransparent) {
+        this._getTransparent = new GetTransparent();
+      }
       this._timer = true;
       this._start();
     }
@@ -199,6 +201,7 @@ var LazyLoadImg = function () {
       // 解除事件绑定
       delete this._timer;
       this._getTransparent.destroy();
+      this._getTransparent = null;
     }
   }]);
   return LazyLoadImg;
